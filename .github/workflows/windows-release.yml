@@ -19,7 +19,10 @@ jobs:
 
     - name: Integrate vcpkg
       run: |
-        vcpkg integrate install
+        cd "$env:VCPKG_INSTALLATION_ROOT"
+        git pull
+        .\vcpkg update
+        .\vcpkg integrate install
 
     - name: Install libwebsockets via vcpkg
       run: |
