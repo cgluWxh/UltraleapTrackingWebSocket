@@ -39,16 +39,22 @@ jobs:
         cd build
         cmake --build . --config Release
 
+    - name: Package Release Files
+      run: |
+        Copy-Item -Path "LeapSDK\lib\x64\LeapC.dll" -Destination "build\Release\" -Force
+        cd build\Release
+        Compress-Archive -Path "*.exe", "*.dll" -DestinationPath "..\..\UltraleapTrackingWebSocket-Windows.zip"
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: UltraleapTrackingWebSocket-Windows-EXE
-        path: build/Release/*.exe # 匹配生成的 exe 文件
+        name: UltraleapTrackingWebSocket-Windows
+        path: UltraleapTrackingWebSocket-Windows.zip
 
     - name: GitHub Release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: build/Release/*.exe
+        files: UltraleapTrackingWebSocket-Windows.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
