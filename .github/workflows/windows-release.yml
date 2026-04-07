@@ -32,7 +32,7 @@ jobs:
       run: |
         mkdir build
         cd build
-        cmake -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT\scripts\buildsystems\vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release ..
+        cmake -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT\scripts\buildsystems\vcpkg.cmake" -DLeapSDK_DIR="${{ github.workspace }}\LeapSDK\lib\cmake\LeapSDK" -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Build
       run: |
